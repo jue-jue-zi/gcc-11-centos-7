@@ -4,6 +4,7 @@
 
 1. `gcc-11.3.0-built.tar.gz` 中的 `./gcc-temp` 目录为已经编译好的 gcc 11.3。
 2. `glibc-2.35-built.tar.gz` 中的 `./build` 目录为已经编译好的 glibc 2.35。
+3. `make-4.3-built.tar.gz` 中的 `./build` 目录为已经编译好的 make 4.3。
 
 ## 编译环境：
 
