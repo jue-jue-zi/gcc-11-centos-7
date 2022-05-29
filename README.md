@@ -4,7 +4,8 @@
 
 1. `gcc-11.3.0-built.tar.gz` 中的 `./gcc-temp` 目录为已经编译好的 gcc 11.3。
 2. `glibc-2.35-built.tar.gz` 中的 `./build` 目录为已经编译好的 glibc 2.35。
-3. `make-4.3-built.tar.gz` 中的 `./build` 目录为已经编译好的 make 4.3。
+3. `glibc-2.27-built.tar.gz` 中的 `./build` 目录为已经编译好的 glibc 2.27。
+4. `make-4.3-built.tar.gz` 中的 `./build` 目录为已经编译好的 make 4.3。
 
 ## 编译环境：
 
@@ -23,8 +24,8 @@
 cd /usr/lib64
 wget https://raw.githubusercontent.com/jue-jue-zi/gcc-11-centos-7/main/libstdc%2B%2B.so.6.0.29 -O /usr/lib64/libstdc++.so.6.0.29
 ln -sf libstdc++.so.6.0.29 libstdc++.so.6
+# 运行 clangd 11 12 不需要替换 libm.so
 # 不建议替换 libm.so 可能导致以后编译错误
-# 运行 clangd 11 不需要替换 libm.so
 # configure: error: cannot compute sizeof (long long)
 wget https://raw.githubusercontent.com/jue-jue-zi/gcc-11-centos-7/main/libm-2.35.so -O /usr/lib64/libm-2.35.so
 ln -sf libm-2.35.so libm.so.6
@@ -32,8 +33,9 @@ ln -sf libm-2.35.so libm.so.6
 # ln -sf libm-2.17.so libm.so.6
 
 # test
-wget https://github.com/ycm-core/llvm/releases/download/14.0.0/clangd-14.0.0-x86_64-unknown-linux-gnu.tar.bz2
-tar xvf clangd-14.0.0-x86_64-unknown-linux-gnu.tar.bz2 -C clangd
+wget https://github.com/ycm-core/llvm/releases/download/12.0.0/clangd-12.0.0-x86_64-unknown-linux-gnu.tar.bz2
+mkdir clangd-12.0.0
+tar xvf clangd-12.0.0-x86_64-unknown-linux-gnu.tar.bz2 -C clangd-12.0.0
 ./clangd/bin/clangd
 ```
 
@@ -68,7 +70,20 @@ ln -sf libstdc++.so.6.0.29 libstdc++.so.6
 # 查看系统 libstdc++ 支持的版本
 strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX
 
-# ------------------------- glibc -----------------------------
+# ------------------------- glibc 2.27 -----------------------------
+
+# activate gcc 7
+yum -y install centos-release-scl-rh
+yum -y install devtoolset-7-build
+yum -y install devtoolset-7-gcc devtoolset-7-gcc-c++
+source /opt/rh/devtoolset-7/enable
+# gcc -v
+# gcc version 7.3.1 20180303 (Red Hat 7.3.1-5) (GCC)
+
+# build glibc
+# same as glibc 2.35
+
+# ------------------------- glibc 2.35 -----------------------------
 
 # build make
 wget http://mirrors.ustc.edu.cn/gnu/make/make-4.3.tar.gz

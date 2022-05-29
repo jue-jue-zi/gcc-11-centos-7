@@ -1,3 +1,4 @@
 gcc-11.3.0-built.tar.gz filter=lfs diff=lfs merge=lfs -text
 glibc-2.35-built.tar.gz filter=lfs diff=lfs merge=lfs -text
 make-4.3-built.tar.gz filter=lfs diff=lfs merge=lfs -text
+glibc-2.27-built.tar.gz filter=lfs diff=lfs merge=lfs -text
