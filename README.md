@@ -17,6 +17,26 @@
 # gcc version 4.8.5 20150623 (Red Hat 4.8.5-44) (GCC)
 ```
 
+## 直接使用编译好的版本
+
+```bash
+cd /usr/lib64
+wget https://raw.githubusercontent.com/jue-jue-zi/gcc-11-centos-7/main/libstdc%2B%2B.so.6.0.29 -O /usr/lib64/libstdc++.so.6.0.29
+ln -sf libstdc++.so.6.0.29 libstdc++.so.6
+# 不建议替换 libm.so 可能导致以后编译错误
+# 运行 clangd 11 不需要替换 libm.so
+# configure: error: cannot compute sizeof (long long)
+wget https://raw.githubusercontent.com/jue-jue-zi/gcc-11-centos-7/main/libm-2.35.so -O /usr/lib64/libm-2.35.so
+ln -sf libm-2.35.so libm.so.6
+# 如果后续出现编译错误，可以恢复原软链接
+# ln -sf libm-2.17.so libm.so.6
+
+# test
+wget https://github.com/ycm-core/llvm/releases/download/14.0.0/clangd-14.0.0-x86_64-unknown-linux-gnu.tar.bz2
+tar xvf clangd-14.0.0-x86_64-unknown-linux-gnu.tar.bz2 -C clangd
+./clangd/bin/clangd
+```
+
 ## 编译命令：
 
 ```bash
