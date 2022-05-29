@@ -1,6 +1,9 @@
 # gcc-11-centos-7
 
-**注意：`gcc-11.3.0-built.tar.gz` 中的 `./gcc-temp` 目录为已经编译好的 gcc 11.3。**
+**注意：**
+
+1. `gcc-11.3.0-built.tar.gz` 中的 `./gcc-temp` 目录为已经编译好的 gcc 11.3。
+2. `glibc-2.35-built.tar.gz` 中的 `./build` 目录为已经编译好的 glibc 2.35。
 
 ## 编译环境：
 
@@ -61,6 +64,8 @@ yum -y install centos-release-scl-rh
 yum -y install devtoolset-8-build
 yum -y install devtoolset-8-gcc devtoolset-8-gcc-c++
 source /opt/rh/devtoolset-8/enable
+# gcc -v
+# gcc version 8.3.1 20190311 (Red Hat 8.3.1-3) (GCC)
 
 # build glibc
 wget https://ftp.gnu.org/gnu/glibc/glibc-2.35.tar.gz
@@ -73,4 +78,6 @@ make -j12
 cp ./math/libm.so /usr/lib64/libm-2.35.so
 cd /usr/lib64
 ln -sf libm-2.35.so libm.so.6
+
+strings /usr/lib64/libm.so | grep GLIBC
 ```
