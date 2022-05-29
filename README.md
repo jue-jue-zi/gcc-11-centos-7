@@ -16,6 +16,8 @@
 ## 编译命令：
 
 ```bash
+# ------------------------- gcc -----------------------------
+
 # 编译 gcc 7/11，并替换系统默认 libstdc++
 # wget http://mirrors.nju.edu.cn/gnu/gcc/gcc-7.5.0/gcc-7.5.0.tar.gz
 wget http://mirrors.nju.edu.cn/gnu/gcc/gcc-11.3.0/gcc-11.3.0.tar.gz
@@ -41,4 +43,34 @@ ln -sf libstdc++.so.6.0.29 libstdc++.so.6
 
 # 查看系统 libstdc++ 支持的版本
 strings /usr/lib64/libstdc++.so.6 | grep GLIBCXX
+
+# ------------------------- glibc -----------------------------
+
+# build make
+wget http://mirrors.ustc.edu.cn/gnu/make/make-4.3.tar.gz
+tar zxvf make-4.3.tar.gz
+cd make-4.3
+mkdir build && cd build
+../configure  --prefix=/usr/local
+make -j12
+make install
+ln -sf /usr/local/bin/make /usr/bin/make
+
+# activate gcc 8
+yum -y install centos-release-scl-rh
+yum -y install devtoolset-8-build
+yum -y install devtoolset-8-gcc devtoolset-8-gcc-c++
+source /opt/rh/devtoolset-8/enable
+
+# build glibc
+wget https://ftp.gnu.org/gnu/glibc/glibc-2.35.tar.gz
+tar zxvf glibc-2.35.tar.gz
+cd glibc-2.35
+yum -y install bison
+mkdir build && cd build
+../configure --prefix=/usr --disable-profile --enable-add-ons --with-headers=/usr/include --with-binutils=/usr/bin
+make -j12
+cp ./math/libm.so /usr/lib64/libm-2.35.so
+cd /usr/lib64
+ln -sf libm-2.35.so libm.so.6
 ```
